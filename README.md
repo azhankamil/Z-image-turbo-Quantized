@@ -7,7 +7,8 @@ This repository demonstrates running **Z-Image-Turbo (FP8)** on modest consumer 
 - **RAM:** 16GB
 - **Frontend:** ComfyUI
 
-![Uploading Screenshot 2026-02-27 at 6.39.58 AM.png…]()
+<img width="1440" height="779" alt="image" src="https://github.com/user-attachments/assets/750e0f2e-81af-482d-a872-242b9d269b71" />
+
 
 
 
@@ -40,6 +41,40 @@ This makes the setup accessible to users with Pascal-generation (2016–2018) GP
 | RAM offloading | Enabled (move layers to CPU when VRAM is full) |
 
 > **Tip:** In ComfyUI, launch with `--lowvram` and `--fp8_e4m3fn` flags to activate low-VRAM mode and FP8 inference automatically.
+
+Dependencies
+Download Qwen 3 4B to your text_encoders directory: https://civitai.com/models/2169712?modelVersionId=2474529
+
+Alternatives:
+
+bf16:
+
+Civitai
+
+ComfyUI
+
+GGUF (for even smaller file):
+
+Q8_0
+
+Download Flux VAE to your vae directory: https://huggingface.co/Comfy-Org/z_image_turbo/blob/main/split_files/vae/ae.safetensors
+
+Mirror: Civitai
+
+TAEF1 (for even smaller file): decoder and encoder (download to your vae_approx folder)
+
+If using the SVDQ quantization, see "About SVDQ / Nunchaku" session below.
+
+Example:
+
+- 📂 ComfyUI
+  - 📂 models
+    - 📂 diffusion_models
+        - z-image-turbo_fp8_scaled_e4m3fn_KJ.safetensors
+    - 📂 text_encoders
+        - qwen3_4b_fp8_scaled.safetensors
+    - 📂 vae
+      - FLUX1/ae.safetensors
 
 ---
 
