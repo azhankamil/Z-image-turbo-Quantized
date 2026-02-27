@@ -1,90 +1,74 @@
-<img width="1440" height="779" alt="image" src="https://github.com/user-attachments/assets/6bada40d-6e80-4cf9-a7c5-78f3451761f5" /># Z-Image-Turbo on GTX 1050 Ti (4GB) – ComfyUI Workflow
+#Z-Image-Turbo on GTX 1050 Ti (4GB) – ComfyUI Workflow
+This repo shows something simple:
+A 2016 GPU can still generate AI images in 2026.
+No RTX.
+No 12GB VRAM.
+No fancy AI marketing.
+Just optimization.
+🖥️ Hardware Used
+GPU: GTX 1050 Ti (4GB, Pascal – 2016)
+CPU: i5-9400F
+RAM: 16GB
+UI: ComfyUI
+Model: Z-Image-Turbo (FP8)
 
-This repository demonstrates running **Z-Image-Turbo (FP8)** on modest consumer hardware using ComfyUI:
+<img width="1440" height="779" alt="Screenshot 2026-02-27 at 6 45 13 AM" src="https://github.com/user-attachments/assets/697886af-881c-4a2d-8e8d-6b8eb38bd8b7" />
 
-- **GPU:** GTX 1050 Ti (4GB VRAM, Pascal, 2016)
-- **CPU:** Intel Core i5-9400F
-- **RAM:** 16GB
-- **Frontend:** ComfyUI
-
-<img width="1440" height="779" alt="image" src="https://github.com/user-attachments/assets/750e0f2e-81af-482d-a872-242b9d269b71" />
-
-
-
-
-The workflow uses FP8 weight quantization and VRAM/RAM offloading to make image generation viable on GPUs with as little as 4GB of VRAM.
-
----
-
-## Why This Matters
-
-Most modern diffusion models are designed with high-end GPUs in mind (RTX 3090, A100, etc.). The GTX 1050 Ti represents a large segment of users who cannot afford to upgrade their hardware.
-
-Z-Image-Turbo with FP8 quantization significantly reduces the memory footprint of the model weights. Combined with ComfyUI's built-in CPU offloading, it becomes possible to generate images on 4GB VRAM cards by:
-
-- **FP8 weights** – halving the memory used by model parameters compared to FP16.
-- **VRAM offloading** – moving tensors to RAM when VRAM is exhausted, preventing out-of-memory crashes.
-- **Reduced resolution** – working at 512×512 keeps activation memory low enough to fit within 4GB.
-
-This makes the setup accessible to users with Pascal-generation (2016–2018) GPUs that are otherwise left behind by newer model releases.
-
----
-
-## Recommended Settings
-
-| Setting | Value |
-|---|---|
-| Resolution | 512×512 |
-| Steps | 6–8 |
-| Model precision | FP8 weights |
-| VRAM offloading | Enabled (ComfyUI `--lowvram` or `--cpu-vae`) |
-| RAM offloading | Enabled (move layers to CPU when VRAM is full) |
-
-> **Tip:** In ComfyUI, launch with `--lowvram` and `--fp8_e4m3fn` flags to activate low-VRAM mode and FP8 inference automatically.
-
-Dependencies
-Download Qwen 3 4B to your text_encoders directory: https://civitai.com/models/2169712?modelVersionId=2474529
-
-Alternatives:
-
-bf16:
-
-Civitai
-
-ComfyUI
-
-GGUF (for even smaller file):
-
-Q8_0
-
-Download Flux VAE to your vae directory: https://huggingface.co/Comfy-Org/z_image_turbo/blob/main/split_files/vae/ae.safetensors
-
-Mirror: Civitai
-
-TAEF1 (for even smaller file): decoder and encoder (download to your vae_approx folder)
-
-If using the SVDQ quantization, see "About SVDQ / Nunchaku" session below.
-
-Example:
-
-- 📂 ComfyUI
-  - 📂 models
-    - 📂 diffusion_models
-        - z-image-turbo_fp8_scaled_e4m3fn_KJ.safetensors
-    - 📂 text_encoders
-        - qwen3_4b_fp8_scaled.safetensors
-    - 📂 vae
-      - FLUX1/ae.safetensors
-
----
-
-## How to Use
-
-1. **Install ComfyUI** following the [official instructions](https://github.com/comfyanonymous/ComfyUI).
-2. **Download the Z-Image-Turbo FP8 checkpoint** and place it in `ComfyUI/models/checkpoints/`.
-3. **Import the workflow:**
-   - Open ComfyUI in your browser (default: `http://127.0.0.1:8188`).
-   - Click the **Load** button (or drag-and-drop `workflow.json` onto the canvas).
-   - Select `workflow.json` from this repository.
-4. **Verify node connections** – make sure the checkpoint loader points to your downloaded Z-Image-Turbo FP8 model file.
-5. **Queue the prompt** and monitor VRAM usage. If you encounter OOM errors, lower the resolution or increase offloading aggressiveness via ComfyUI launch flags.
+🚀 What’s Happening Here?
+Modern diffusion models expect big GPUs.
+This setup doesn’t have one.
+Instead, it works because of:
+FP8 quantization → smaller model memory footprint
+VRAM ↔ RAM offloading → no instant CUDA OOM
+512×512 sweet spot → manageable activation memory
+Lean workflow → no unnecessary nodes
+Result:
+~2.4GB on GPU
+Rest offloaded to RAM
+Stable image generation on 4GB VRAM
+🎯 Recommended Settings
+Setting	Value
+Resolution	512×512
+Steps	6–8
+Precision	FP8
+Launch Flags	--lowvram --fp8_e4m3fn
+Offloading	Enabled
+If it crashes:
+Lower resolution first.
+Then reduce steps.
+📦 Required Models
+1️⃣ Z-Image-Turbo (FP8)
+Place inside:
+ComfyUI/models/diffusion_models/
+File:
+z-image-turbo_fp8_scaled_e4m3fn_KJ.safetensors
+2️⃣ Qwen 3 4B (Text Encoder)
+Place inside:
+ComfyUI/models/text_encoders/
+File:
+qwen3_4b_fp8_scaled.safetensors
+3️⃣ Flux VAE
+Place inside:
+ComfyUI/models/vae/
+File:
+ae.safetensors
+Optional lightweight VAE:
+TAEF1 decoder + encoder → put inside vae_approx/
+📂 Example Folder Structure
+ComfyUI/
+ └── models/
+     ├── diffusion_models/
+     │    └── z-image-turbo_fp8_scaled_e4m3fn_KJ.safetensors
+     ├── text_encoders/
+     │    └── qwen3_4b_fp8_scaled.safetensors
+     ├── vae/
+     │    └── ae.safetensors
+🛠 How To Use
+Install ComfyUI.
+Place models in the correct folders.
+Launch with:
+python main.py --lowvram --fp8_e4m3fn
+Open http://127.0.0.1:8188
+Drag workflow.json into the canvas.
+Queue prompt.
+That’s it.
