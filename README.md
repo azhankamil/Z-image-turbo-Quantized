@@ -66,6 +66,60 @@ Instead, it works because of:
 
 ### 1️⃣ Z-Image-Turbo (FP8)
 
-Place inside:
-Queue prompt.
-That’s it.
+**Place inside:**
+ComfyUI/models/diffusion_models/
+
+**File:**
+z-image-turbo_fp8_scaled_e4m3fn_KJ.safetensors
+
+---
+
+### 2️⃣ Qwen 3 4B (Text Encoder)
+
+**Place inside:**
+ComfyUI/models/text_encoders/
+
+**File:**
+qwen3_4b_fp8_scaled.safetensors
+
+---
+
+### 3️⃣ Flux VAE
+
+**Place inside:**
+ComfyUI/models/vae/
+
+**File:**
+ae.safetensors
+
+**Optional lightweight VAE:**
+vae_approx/
+
+---
+
+## 📂 Example Folder Structure
+ComfyUI/
+└── models/
+├── diffusion_models/
+│ └── z-image-turbo_fp8_scaled_e4m3fn_KJ.safetensors
+├── text_encoders/
+│ └── qwen3_4b_fp8_scaled.safetensors
+├── vae/
+│ └── ae.safetensors
+
+---
+
+## 🛠 How To Use
+
+1. Install ComfyUI  
+2. Place models in the correct folders  
+3. Launch with:
+python main.py --lowvram --fp8_e4m3fn
+
+4. Open:
+http://127.0.0.1:8188
+
+5. Drag `workflow.json` into the canvas  
+6. Queue your prompt  
+
+**That’s it.**
