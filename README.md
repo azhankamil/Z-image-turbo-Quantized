@@ -3,9 +3,13 @@
 This repo shows something simple:
 
 > A 2016 GPU can still generate AI images in 2026.
+> 
 
 
 <img width="1440" height="779" alt="Screenshot 2026-02-27 at 6 45 13 AM" src="https://github.com/user-attachments/assets/697886af-881c-4a2d-8e8d-6b8eb38bd8b7" />
+
+
+
 
 No RTX.  
 No 12GB VRAM.  
