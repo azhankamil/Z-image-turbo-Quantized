@@ -1,4 +1,4 @@
-# Z-Image-Turbo on GTX 1050 Ti (4GB) – ComfyUI Workflow
+<img width="1440" height="779" alt="image" src="https://github.com/user-attachments/assets/6bada40d-6e80-4cf9-a7c5-78f3451761f5" /># Z-Image-Turbo on GTX 1050 Ti (4GB) – ComfyUI Workflow
 
 This repository demonstrates running **Z-Image-Turbo (FP8)** on modest consumer hardware using ComfyUI:
 
@@ -6,6 +6,10 @@ This repository demonstrates running **Z-Image-Turbo (FP8)** on modest consumer 
 - **CPU:** Intel Core i5-9400F
 - **RAM:** 16GB
 - **Frontend:** ComfyUI
+
+![Uploading Screenshot 2026-02-27 at 6.39.58 AM.png…]()
+
+
 
 The workflow uses FP8 weight quantization and VRAM/RAM offloading to make image generation viable on GPUs with as little as 4GB of VRAM.
 
